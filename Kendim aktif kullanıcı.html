@@ -1,0 +1,76 @@
+{% render 'live-visitors' %} <!-- Shopify main-product.liquid içerisinde {%- when 'title' -%} altına veya üzerine yapıştırın -->
+
+
+
+<!-- Parçacıklar dosyasının içerisine live-visitors isminde dosya oluşturun ve allta verdiğim kodları içerisine yükleyin -->
+
+<style>
+    .live_visitors {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding-left: 13px;
+    }
+    .live_visitors::before {
+      position: absolute;
+      display: inline-block;
+      content: "";
+      width: 8px;
+      height: 8px;
+      margin-left: -14px;
+      top: 0.6em;
+      border-radius: 100%;
+      background: currentColor;
+      color: rgba(33, 182, 70, 1);
+      box-shadow: 0 0 0 0 rgba(33, 182, 70, 1);
+      animation: pulse-blue 2s infinite;
+    }
+    @keyframes pulse-blue {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(33, 182, 70, 0.7);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(33, 182, 70, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(33, 182, 70, 0);
+      }
+    }
+  </style>
+  
+  <p class="live_visitors no-js-hidden">
+    <span id="visitors_count"></span> Kişi şu anda ürünü inceliyor
+  </p>
+  
+  <script>
+    let max_visitors = 57; //en fazla kaç kişi görüneceği
+    let min_visitors = 11; //en az kaç kişi görüneceği
+    let delay = 20000; //kaç saniyede bir güncelleneceği
+    let visitors_count = Math.floor(Math.random() * (max_visitors - min_visitors + 1) + min_visitors);
+    
+    document.getElementById("visitors_count").innerHTML = visitors_count;
+    
+    setInterval(function() {
+        let previous_count = parseInt(document.getElementById("visitors_count").innerHTML);
+    
+        let change = Math.floor(Math.random() * 5) + 1; // artış veya azalış miktarı 1 ila 5 arası rastgele değer
+    
+        if (Math.random() < 0.5) {
+            change *= -1;
+        }
+    
+        let new_count = previous_count + change;
+    
+        new_count = Math.max(min_visitors, Math.min(max_visitors, new_count));
+    
+        document.getElementById("visitors_count").innerHTML = new_count;
+    }, delay);
+  
+  </script>
+  
+
+
